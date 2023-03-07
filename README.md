@@ -1,6 +1,6 @@
 # AlbumsApp
 
-    App Demo : https://drive.google.com/file/d/1ba99_MoQtQg50Lbtn_CvFQ4c8dkh-S43/view?usp=sharing
+   App Demo : https://drive.google.com/file/d/1ba99_MoQtQg50Lbtn_CvFQ4c8dkh-S43/view?usp=sharing
 
 
 |  <img width="250" alt="Simulator Screen Shot - iPhone 14 - 2023-03-07 at 14 17 12" src="https://user-images.githubusercontent.com/58272414/223419911-d889f14a-6709-45be-bd16-0cfb1294eabf.png">
