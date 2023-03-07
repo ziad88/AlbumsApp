@@ -8,7 +8,7 @@
 import UIKit
 
 class ProfileViewController: UIViewController, AlbumDataManagerDelegate {
-
+    
     @IBOutlet weak var profileNameLabel: UILabel!
     
     @IBOutlet weak var profileAddressLabel: UILabel!
@@ -18,14 +18,12 @@ class ProfileViewController: UIViewController, AlbumDataManagerDelegate {
     
     var albumDataManager = AlbumDataManager()
     
-    var albumTitles = [String](repeating: "loading", count: 10) {
+    var albumModel = [AlbumDataModel](repeating: AlbumDataModel(id: 0, title: "loading.."), count: 10) {
         didSet {
             tableView.reloadData()
         }
     }
     
-    var albumIds = [Int](repeating: 0, count: 10)
-
     override func viewDidLoad() {
         super.viewDidLoad()
         albumDataManager.delegate = self
@@ -33,7 +31,8 @@ class ProfileViewController: UIViewController, AlbumDataManagerDelegate {
         tableView.dataSource = self
         albumDataManager.getUsers()
     }
-
+    
+//MARK: - --------AlbumDataManager Delegate Methods---------------------------
     func didGetUser(_ albumDataManager: AlbumDataManager, data: UserDataModel) {
         DispatchQueue.main.async {
             self.profileNameLabel.text = data.name
@@ -44,8 +43,7 @@ class ProfileViewController: UIViewController, AlbumDataManagerDelegate {
     func didGetAlbums(_ albumDataManager: AlbumDataManager, data: [AlbumDataModel]) {
         DispatchQueue.main.async {
             for i in 0...9 {
-                self.albumTitles[i] = data[i].title
-                self.albumIds[i] = data[i].id
+                self.albumModel[i] = data[i]
             }
         }
     }
@@ -56,31 +54,32 @@ class ProfileViewController: UIViewController, AlbumDataManagerDelegate {
     
 }
 
+//MARK: - --------------UITableView Delegate, DataSource Methods-------------------
 extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return albumTitles.count 
+        return albumModel.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reusableCell", for: indexPath)
-        cell.textLabel?.text = self.albumTitles[indexPath.row]
+        cell.textLabel?.text = self.albumModel[indexPath.row].title
         cell.textLabel?.numberOfLines = 2
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: "goToAlbum", sender: self)
-         tableView.deselectRow(at: indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let destinationVC = segue.destination as! AlbumPicViewController
-
+        
         if let indexPath = tableView.indexPathForSelectedRow {
-            destinationVC.selectedAlbumID = albumIds[indexPath.row]
-            destinationVC.selectedAlbumTitle = albumTitles[indexPath.row]
+            destinationVC.selectedAlbumID = albumModel[indexPath.row].id
+            destinationVC.selectedAlbumTitle = albumModel[indexPath.row].title
         }
     }
-
+    
     
 }

@@ -21,7 +21,7 @@ protocol PhotoDataManagerDelegate {
 struct AlbumDataManager {
     let url = "https://jsonplaceholder.typicode.com/api/GET/"
     var delegate: AlbumDataManagerDelegate?
-    var PDelegate: PhotoDataManagerDelegate?
+    var PicDelegate: PhotoDataManagerDelegate?
     
     func getUsers() {
         let urlString = "\(url)users"
@@ -41,13 +41,13 @@ struct AlbumDataManager {
     
     func performRequest(with urlString: String, type: String) {
         if let url = URL(string: urlString) {
-
+            
             let session = URLSession(configuration: .default)
             
             let task = session.dataTask(with: url) { (data, response, error) in
                 if error != nil {
                     self.delegate?.didFailWithError(error: error!)
-                    self.PDelegate?.didFailWithError(error: error!)
+                    self.PicDelegate?.didFailWithError(error: error!)
                     return
                 }
                 if type == "user" {
@@ -66,7 +66,7 @@ struct AlbumDataManager {
                 } else if type == "photos"{
                     if let safeData = data {
                         if let data = self.parsePhotos(safeData) {
-                            self.PDelegate?.didGetPhotos(self, data: data)
+                            self.PicDelegate?.didGetPhotos(self, data: data)
                         }
                     }
                 }
@@ -81,7 +81,7 @@ struct AlbumDataManager {
         var userDataArr = [UserDataModel]()
         do {
             let decodedData = try decoder.decode([UserData].self, from: userDataModel)
-
+            
             for i in 0...9 {
                 let id = decodedData[i].id
                 let name = decodedData[i].name
@@ -90,11 +90,11 @@ struct AlbumDataManager {
                 let city = decodedData[i].address.city
                 let zipCode = decodedData[i].address.zipcode
                 let phone = decodedData[i].phone
-               
+                
                 let user = UserDataModel(id: id, name: name, street: street, suite: suite, city: city, zipcode: zipCode, phone: phone)
                 userDataArr.append(user)
             }
-           
+            
             let returnUser = userDataArr.randomElement()
             return returnUser
         } catch {
@@ -108,7 +108,7 @@ struct AlbumDataManager {
         var albumArr = [AlbumDataModel]()
         do {
             let decodedData = try decoder.decode([AlbumDataModel].self, from: albumDataModel)
-
+            
             for i in 0...9 {
                 let id = decodedData[i].id
                 let title = decodedData[i].title
@@ -116,8 +116,6 @@ struct AlbumDataManager {
                 let album = AlbumDataModel(id: id, title: title)
                 albumArr.append(album)
             }
-           
-           
             return albumArr
         } catch {
             delegate?.didFailWithError(error: error)
@@ -130,7 +128,7 @@ struct AlbumDataManager {
         var picArr = [PicModel]()
         do {
             let decodedData = try decoder.decode([PicModel].self, from: picModel)
-
+            
             for i in 0...49 {
                 let title = decodedData[i].title
                 let url = decodedData[i].url
@@ -138,11 +136,9 @@ struct AlbumDataManager {
                 let photo = PicModel(title: title, url: url)
                 picArr.append(photo)
             }
-           
-           
             return picArr
         } catch {
-            PDelegate?.didFailWithError(error: error)
+            PicDelegate?.didFailWithError(error: error)
             return nil
         }
     }

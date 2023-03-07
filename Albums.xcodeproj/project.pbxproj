@@ -53,6 +53,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B70E66BE29B7562400213CA0 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				B74DD7C629B50A200070BA22 /* Main.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		B74DD7B429B50A200070BA22 = {
 			isa = PBXGroup;
 			children = (
@@ -72,11 +80,11 @@
 		B74DD7BF29B50A200070BA22 /* Albums */ = {
 			isa = PBXGroup;
 			children = (
-				B74DD7D629B516890070BA22 /* Model */,
 				B74DD7C029B50A200070BA22 /* AppDelegate.swift */,
 				B74DD7C229B50A200070BA22 /* SceneDelegate.swift */,
-				B7DA71B929B61994005161B7 /* Controller */,
-				B74DD7C629B50A200070BA22 /* Main.storyboard */,
+				B74DD7D629B516890070BA22 /* Model */,
+				B70E66BE29B7562400213CA0 /* View */,
+				B7DA71B929B61994005161B7 /* ViewModel */,
 				B74DD7C929B50A220070BA22 /* Assets.xcassets */,
 				B74DD7CB29B50A220070BA22 /* LaunchScreen.storyboard */,
 				B74DD7CE29B50A220070BA22 /* Info.plist */,
@@ -96,7 +104,7 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		B7DA71B929B61994005161B7 /* Controller */ = {
+		B7DA71B929B61994005161B7 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
 				B74DD7C429B50A200070BA22 /* ProfileViewController.swift */,
@@ -104,7 +112,7 @@
 				B7DA71BC29B6485B005161B7 /* CollectionViewCell.swift */,
 				B7DA71BE29B663DC005161B7 /* PicCollectionViewFlowLayout.swift */,
 			);
-			path = Controller;
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
